@@ -3,26 +3,17 @@
 
 const express = require('express')
 const app = express()
-const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth20').Strategy
-const keys = require('./config/keys')
+
+require('./services/passport') // just provide the passport config code before the program need it for google oAuth inside routes
+const authRoutes = require('./routes/authRoutes')
 // middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-passport.use(new GoogleStrategy(
-  { clientID: keys.googleClientID, clientSecret: keys.googleClientSecret, callbackURL: 'http://localhost:4000/auth/google/callback' }, (accessToken, refreshToken, profile, done) => {
-    console.log('accessToken', accessToken)
-    console.log('refreshToken', refreshToken)
-    console.log('profile', profile)
-  }
-))
+// routes 
+app.use(authRoutes)
 
-app.get('/auth/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
-}))
 
-app.get('/auth/google/callback', passport.authenticate('google'))
 const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
