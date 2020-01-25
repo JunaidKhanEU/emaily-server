@@ -1,5 +1,4 @@
-// git for deply heroku --- https://git.heroku.com/emaily-mernapp.git
-// url for server app https://emaily-mernapp.herokuapp.com/
+
 
 const express = require('express')
 const app = express()
