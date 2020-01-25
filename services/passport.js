@@ -5,11 +5,13 @@ const keys = require('../config/keys')
 const Users = mongoose.model('users') // import Users Model this way becuase of testing like mocha get issue with normal import from Models from mongoose
 
 passport.serializeUser((user, done) => {
+ console.log('serializeUser')
   done(null, user.id) // we select the unique identifier for cookie
 })
 
 // to check cookie unique identifier which we setup earlier, this function runs on all request after setting up the cookie-session
 passport.deserializeUser(async (userId, done) => {
+  console.log('deserializeUser')
   const user = await Users.findById(userId)
   done(null, user)
 })
@@ -22,6 +24,7 @@ passport.use(
       callbackURL: 'http://localhost:4000/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
+      console.log('callback function')
       const existUser = await Users.findOne({ googleId: profile.id })
       if (existUser) {
         console.log(existUser.id)
