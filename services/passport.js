@@ -8,7 +8,7 @@ passport.serializeUser((user, done) => {
   done(null, user.id) // we select the unique identifier for cookie
 })
 
-// to check cookie unique identifier which we setup earlier
+// to check cookie unique identifier which we setup earlier, this function runs on all request after setting up the cookie-session
 passport.deserializeUser(async (userId, done) => {
   const user = await Users.findById(userId)
   done(null, user)
