@@ -10,9 +10,8 @@ const authRoutes = require('./routes/authRoutes')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-// routes 
+// routes
 app.use(authRoutes)
-
 
 const PORT = process.env.PORT || 4000
 
